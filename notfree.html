@@ -9,19 +9,25 @@
       href="https://ugc.production.linktr.ee/9250b48c-ee52-4bdb-af03-b157be4e8c33_image.jpeg?io=true&size=avatar-v3_0"
     />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="css/style.css" rel="stylesheet">
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+    <script type="text/javascript" src="js/darkmode.js" defer></script>
   </head>
-  <body class="bg-blue-500 flex items-center justify-center min-h-screen">
+  <body class="body1 flex items-center justify-center min-h-screen">
     <div class="w-full max-w-4xl">
       <header
-        class="px-2 py-4 flex flex-col justify-center items-center text-center bg-white rounded-lg shadow-md"
+        class="px-2 py-4 flex flex-col justify-center items-center text-center  nav rounded-lg shadow-md"
       >
+      <button id="theme-switch" class="ml-auto mr-4 rounded-full border bg-gray-400 p-1 hover:bg-gray-500 flex">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-280q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Z"/></svg>
+      </button>
         <img
           class="object-cover border-4 border-indigo-600 rounded-full shadow-lg h-24 w-24"
           src="https://pbs.twimg.com/profile_images/1738230784220422144/bcmSFj4S_400x400.jpg"
           alt=""
         />
-        <h1 class="text-2xl text-gray-800 font-bold mt-2">Nekowawolf</h1>
+        <h1 class="text-2xl textp font-bold mt-2">Nekowawolf</h1>
         <h2 class="text-base md:text-xl text-gray-600 font-bold">
           #WAGMI
         </h2>
@@ -123,10 +129,10 @@
           >
         </h1>
       </header>
-      <div class="px-2 py-4 bg-white rounded-lg shadow-md mt-4">
+      <div class="px-2 py-4 nav rounded-lg shadow-md mt-4">
         <div class="overflow-x-auto relative">
           <table class="w-full text-sm text-left text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-200">
+            <thead class="text-xs textp uppercase table-list">
               <tr>
                 <th scope="col" class="py-3 px-6">Airdrop</th>
                 <th scope="col" class="py-3 px-6">Task</th>
@@ -134,8 +140,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">
                   Owlto Finance
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-red-500 bg-red-500 text-white rounded-md h-7 w-14">
@@ -152,8 +158,8 @@
                   >
                 </td>
               </tr>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">DFlow
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">DFlow
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-red-500 bg-red-500 text-white rounded-md h-7 w-14">
                       <span class="p-2">RETRO</span>
@@ -169,8 +175,8 @@
                   >
                 </td>
               </tr>
-              <tr class="bg-gray-50 border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">
                   Solv Protocol
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-gray-500 bg-gray-500 text-white rounded-md h-7 w-14">
@@ -187,8 +193,8 @@
                   >
                 </td>
               </tr>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">zkLink
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">zkLink
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-gray-500 bg-gray-500 text-white rounded-md h-7 w-14">
                       <span class="p-2">HOLD</span>
@@ -204,8 +210,8 @@
                   >
                 </td>
               </tr>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">Elixir
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">Elixir
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-gray-500 bg-gray-500 text-white rounded-md h-7 w-14">
                       <span class="p-2">HOLD</span>
@@ -221,8 +227,8 @@
                   >
                 </td>
               </tr>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">AltLayer
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">AltLayer
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-indigo-950 bg-indigo-950 text-white rounded-md h-7 w-14">
                       <span class="p-2">STAKE</span>
@@ -238,8 +244,8 @@
                   >
                 </td>
               </tr>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">Pyth
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">Pyth
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-indigo-950 bg-indigo-950 text-white rounded-md h-7 w-14">
                       <span class="p-2">STAKE</span>
@@ -255,8 +261,8 @@
                   >
                 </td>
               </tr>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">Jupiter
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">Jupiter
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-indigo-950 bg-indigo-950 text-white rounded-md h-7 w-14">
                       <span class="p-2">STAKE</span>
@@ -272,8 +278,8 @@
                   >
                 </td>
               </tr>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">
                   Celestia 
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-indigo-950 bg-indigo-950 text-white rounded-md h-7 w-14">
@@ -290,8 +296,8 @@
                   > 
                 </td>
               </tr>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-6 font-medium text-gray-900">
+              <tr class="nav border-underline">
+               <td class="py-4 px-6 font-medium textp">
                   Wormhole
                   <td class="py-4 px-6">
                     <div class="flex items-center justify-center border border-indigo-950 bg-indigo-950 text-white rounded-md h-7 w-14">
@@ -313,7 +319,7 @@
           <nav aria-label="Page navigation example" class="flex justify-center mt-6">
             <ul class="flex items-center -space-x-px h-8 text-sm">
               <li>
-                <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
+                <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 pagin border border-e-0 paginb rounded-l-lg pagin-hover">
                   <span class="sr-only">Previous</span>
                   <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
@@ -321,9 +327,9 @@
                 </a>
               </li>
               <li>
-                <a href="./notfreel" aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">1</a>
+                <a href="./notfreel" aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border paginb pagin-page pagin-hover-page hover:text-blue-700">1</a>
               </li>
-                <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
+                <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border pagin paginb rounded-r-lg pagin-hover">
                   <span class="sr-only">Next</span>
                   <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
