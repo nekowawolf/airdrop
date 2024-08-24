@@ -12,6 +12,13 @@
     <link href="css/style.css" rel="stylesheet">
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
     <script type="text/javascript" src="js/darkmode.js" defer></script>
+    <script>
+      (function() {
+        if (localStorage.getItem('darkmode') === 'active') {
+          document.documentElement.classList.add('darkmode');
+        }
+      })();
+    </script>
   </head>
   <body class=" body1  flex items-center justify-center min-h-screen">
     <div class="w-full max-w-4xl">
