@@ -19,6 +19,13 @@
         }
       })();
     </script>
+    <script>
+      var path = window.location.pathname;
+      if (path.endsWith(".html")) {
+          var newPath = path.replace(".html", "");
+          window.history.replaceState(null, null, newPath);
+      }
+  </script>
   </head>
   <body class="body1 flex items-center justify-center min-h-screen">
     <div class="w-full max-w-4xl">
