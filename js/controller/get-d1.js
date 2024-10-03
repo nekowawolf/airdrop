@@ -8,9 +8,9 @@ let allData = [];
 
 export function fillTableAirdrop(response) {
     const tableBody = document.getElementById("fillAirdrop");
-    tableBody.innerHTML = ""; // Kosongkan tabel
+    tableBody.innerHTML = ""; 
     const paginationContainer = document.getElementById("pagination-controls");
-    paginationContainer.style.display = "none"; // Sembunyikan pagination secara default
+    paginationContainer.style.display = "none"; 
 
     if (Array.isArray(response.data)) {
         if (response.data.length === 0) {
@@ -19,25 +19,25 @@ export function fillTableAirdrop(response) {
                     <td colspan="3" class="text-center">Tidak ada hasil pencarian</td>
                 </tr>
             `;
-            // Pastikan pagination disembunyikan
+
             paginationContainer.style.display = "none";
         } else {
             allData = response.data; 
-            totalPages = Math.ceil(allData.length / ITEMS_PER_PAGE); // Hitung total halaman
+            totalPages = Math.ceil(allData.length / ITEMS_PER_PAGE); 
 
             renderTable(); 
             renderPaginationControls();
 
-            // Tampilkan pagination hanya jika ada data
+           
             if (totalPages > 0) {
-                paginationContainer.style.display = "block"; // Tampilkan pagination
+                paginationContainer.style.display = "block"; 
             } else {
-                paginationContainer.style.display = "none"; // Sembunyikan jika tidak ada halaman
+                paginationContainer.style.display = "none"; 
             }
         }
     } else {
         console.error("Error: Format data tidak valid.");
-        paginationContainer.style.display = "none"; // Sembunyikan jika format tidak valid
+        paginationContainer.style.display = "none"; 
     }
 }
 
@@ -93,7 +93,6 @@ function renderPaginationControls() {
     const ul = document.createElement("ul");
     ul.className = "flex items-center -space-x-px h-8 text-sm";
 
-    // previous button
     const liPrev = document.createElement("li");
     const prevButton = document.createElement("a");
     prevButton.className = "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 pagin paginb border border-e-0 rounded-l-lg pagin-hover";
@@ -112,7 +111,6 @@ function renderPaginationControls() {
     liPrev.appendChild(prevButton);
     ul.appendChild(liPrev);
 
-    // number pagination button
     for (let i = 1; i <= totalPages; i++) {
         const li = document.createElement("li");
         const pageButton = document.createElement("a");
@@ -131,7 +129,6 @@ function renderPaginationControls() {
         ul.appendChild(li);
     }
 
-    // next button
     const liNext = document.createElement("li");
     const nextButton = document.createElement("a");
     nextButton.className = "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 pagin paginb border rounded-r-lg pagin-hover";
