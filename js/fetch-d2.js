@@ -9,11 +9,22 @@ function searchFreeAirdrops(searchTerm) {
         ? urlAPIFree
         : `${urlAPIFree}/search/${encodeURIComponent(searchTerm)}`;
 
+    document.getElementById('loading').style.display = 'flex';
+    document.getElementById('fillAirdrop').style.display = 'none';
+    document.getElementById('pagination-controls').style.display = 'none'; 
+
     get(apiUrlFree)
         .then(freeData => {
             fillTableAirdrop(freeData);
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('fillAirdrop').style.display = 'table-row-group';
         })
-        .catch(error => console.error('Error fetching free airdrop data:', error));
+        .catch(error => {
+            console.error('Error fetching free airdrop data:', error);
+
+            document.getElementById('loading').style.display = 'none';
+        });
 }
 
 searchFreeAirdrops('');

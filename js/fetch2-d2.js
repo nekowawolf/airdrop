@@ -9,11 +9,22 @@ function searchPaidAirdrops(searchTerm) {
         ? urlAPIPaid
         : `${urlAPIPaid}/search/${encodeURIComponent(searchTerm)}`;
 
+    document.getElementById('loading').style.display = 'flex';
+    document.getElementById('fillAirdrop').style.display = 'none';
+    document.getElementById('pagination-controls').style.display = 'none'; 
+
     get(apiUrlPaid)
         .then(paidData => {
             fillTableAirdrop(paidData);
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('fillAirdrop').style.display = 'table-row-group';
         })
-        .catch(error => console.error('Error fetching paid airdrop data:', error));
+        .catch(error => {
+            console.error('Error fetching paid airdrop data:', error);
+
+            document.getElementById('loading').style.display = 'none';
+        });
 }
 
 searchPaidAirdrops('');
