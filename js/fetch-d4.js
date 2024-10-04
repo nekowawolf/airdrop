@@ -1,15 +1,15 @@
 import { get } from "./wrappedFetch.js"; 
 import { fillTableAirdrop } from "./controller/get-d2.js";
-import { urlAPIPaid } from "./config/url.js";
+import { urlAPIFree } from "./config/url.js";
 
 let currentPage = 1; 
 
-get(urlAPIPaid, fillTableAirdrop);
+get(urlAPIFree, fillTableAirdrop);
 
-function searchPaidAirdrops(searchTerm) {
-    const apiUrlPaid = searchTerm === ''
-        ? urlAPIPaid
-        : `${urlAPIPaid}/search/${encodeURIComponent(searchTerm)}`;
+function searchFreeAirdrops(searchTerm) {
+    const apiUrlFree = searchTerm === ''
+        ? urlAPIFree
+        : `${urlAPIFree}/search/${encodeURIComponent(searchTerm)}`;
 
     document.getElementById('loading').style.display = 'flex';
     document.getElementById('fillAirdrop').style.display = 'none';
@@ -17,23 +17,23 @@ function searchPaidAirdrops(searchTerm) {
 
     currentPage = 1;
 
-    get(apiUrlPaid)
-        .then(paidData => {
-            fillTableAirdrop(paidData);
+    get(apiUrlFree)
+        .then(freeData => {
+            fillTableAirdrop(freeData);
 
             document.getElementById('loading').style.display = 'none';
             document.getElementById('fillAirdrop').style.display = 'table-row-group';
         })
         .catch(error => {
-            console.error('Error fetching paid airdrop data:', error);
+            console.error('Error fetching free airdrop data:', error);
 
             document.getElementById('loading').style.display = 'none';
         });
 }
 
-searchPaidAirdrops('');
+searchFreeAirdrops('');
 
 document.getElementById('search-input').addEventListener('input', function (e) {
     const searchTerm = e.target.value.trim();
-    searchPaidAirdrops(searchTerm);
+    searchFreeAirdrops(searchTerm);
 });
