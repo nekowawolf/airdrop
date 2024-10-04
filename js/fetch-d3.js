@@ -1,6 +1,8 @@
 import { get } from "./wrappedFetch.js"; 
-import { fillTableAirdrop } from "./controller/get-d1.js";
+import { fillTableAirdrop } from "./controller/get-d2.js";
 import { urlAPIPaid } from "./config/url.js";
+
+let currentPage = 1; 
 
 get(urlAPIPaid, fillTableAirdrop);
 
@@ -11,7 +13,9 @@ function searchPaidAirdrops(searchTerm) {
 
     document.getElementById('loading').style.display = 'flex';
     document.getElementById('fillAirdrop').style.display = 'none';
-    document.getElementById('pagination-controls').style.display = 'none'; 
+    document.getElementById('pagination-controls').style.display = 'none';
+
+    currentPage = 1;
 
     get(apiUrlPaid)
         .then(paidData => {

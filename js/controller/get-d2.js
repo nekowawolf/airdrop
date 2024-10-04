@@ -14,21 +14,17 @@ export function fillTableAirdrop(response) {
 
     if (Array.isArray(response.data)) {
         if (response.data.length === 0) {
-            tableBody.innerHTML = `
-                <tr>
-                    <td colspan="3" class="text-center">Tidak ada hasil pencarian</td>
-                </tr>
-            `;
-
-            paginationContainer.style.display = "none";
+            console.log("no search results");
+            paginationContainer.style.display = "none"; 
         } else {
             allData = response.data; 
             totalPages = Math.ceil(allData.length / ITEMS_PER_PAGE); 
 
+            currentPage = 1; 
+
             renderTable(); 
             renderPaginationControls();
 
-           
             if (totalPages > 0) {
                 paginationContainer.style.display = "block"; 
             } else {
@@ -36,11 +32,10 @@ export function fillTableAirdrop(response) {
             }
         }
     } else {
-        console.error("Error: Format data tidak valid.");
+        console.error("error: invalid data format");
         paginationContainer.style.display = "none"; 
     }
 }
-
 
 function getTaskClass(task) {
     switch (task) {
@@ -72,7 +67,6 @@ function renderTable() {
 
     currentData.forEach(fillRow);
 }
-
 
 function fillRow(value) {
     let taskClass = getTaskClass(value.task);
