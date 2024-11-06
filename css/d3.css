@@ -1,3 +1,27 @@
+.rotate-chevron {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.navbar-width {
+  width: 40%;       
+  max-width: 56rem;  
+}
+
+@media (max-width: 768px) {
+  .navbar-width {
+    width: 97%;       
+    max-width: 56rem;  
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .navbar-width {
+    width: 50%;       
+    max-width: 56rem;  
+  }
+}
+
 :root{
   --table-color: white;
   --base-variant: #e8e9ed;
@@ -15,6 +39,8 @@
   --pagin-hover-page:  #e0f2fe;
   --search-bar: white;
   --border-color: #111827;
+  --loading-color: white;
+  --filter-color: #111528;
 }
 .darkmode{
   --table-color: #111528;
@@ -33,6 +59,8 @@
   --pagin-hover-page: #1b1b1d;
   --search-bar: #1b1b1d;
   --border-color: #E5E7EB;
+  --loading-color: #0055ff;
+  --filter-color: #ffffff;
 }
 
 
@@ -98,6 +126,14 @@ background-color: var(--search-bar);
 
   border-color: var(--border-color)
 
+}
+
+.loading-color {
+  fill: var(--loading-color);    
+}
+
+.filter-color {
+  fill: var(--filter-color);    
 }
 
 

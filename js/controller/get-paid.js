@@ -1,5 +1,5 @@
 import { addInner } from "https://bukulapak.github.io/element/process.js";
-import { fillTable } from "../temp/table-d1.js";
+import { fillTablePaid } from "../temp/table-paid.js";
 
 const ITEMS_PER_PAGE = 10; 
 let currentPage = 1; 
@@ -10,51 +10,32 @@ export function fillTableAirdrop(response) {
     const tableBody = document.getElementById("fillAirdrop");
     tableBody.innerHTML = ""; 
     const paginationContainer = document.getElementById("pagination-controls");
-    paginationContainer.style.display = "none"; 
+    const noDataMessage = document.getElementById("no-data-message");
 
-    if (Array.isArray(response.data)) {
-        if (response.data.length === 0) {
-            console.log("no search results");
+    paginationContainer.style.display = "none"; 
+    noDataMessage.style.display = "none"; 
+
+    if (response && Array.isArray(response.data)) {
+        const activeData = response.data.filter(item => item.status === 'active');
+
+        if (activeData.length === 0) {
+            console.log("no active search results");
+            noDataMessage.style.display = "block"; 
             paginationContainer.style.display = "none"; 
         } else {
-            allData = response.data; 
+            noDataMessage.style.display = "none"; 
+            allData = activeData;
             totalPages = Math.ceil(allData.length / ITEMS_PER_PAGE); 
-
             currentPage = 1; 
-
             renderTable(); 
-            renderPaginationControls();
+            renderPaginationControls(); 
 
-            if (totalPages > 0) {
-                paginationContainer.style.display = "block"; 
-            } else {
-                paginationContainer.style.display = "none"; 
-            }
+            paginationContainer.style.display = totalPages > 0 ? "block" : "none"; 
         }
     } else {
-        console.error("error: invalid data format");
+        console.error("error: invalid data format", response); 
+        noDataMessage.style.display = "block"; 
         paginationContainer.style.display = "none"; 
-    }
-}
-
-function getTaskClass(task) {
-    switch (task) {
-        case 'DAILY':
-            return 'border-violet-700 bg-violet-700';
-        case 'TESTNET':
-            return 'border-green-500 bg-green-500';
-        case 'GAME':
-            return 'border-sky-400 bg-sky-400';
-        case 'SOCIAL':
-            return 'border-fuchsia-600 bg-fuchsia-600';
-        case 'RETRO':
-            return 'border-red-500 bg-red-500';
-        case 'HOLD':
-            return 'border-gray-500 bg-gray-500';
-        case 'STAKE':
-            return 'border-indigo-950 bg-indigo-950';
-        default:
-            return 'border-yellow-400 bg-yellow-400';
     }
 }
 
@@ -63,17 +44,41 @@ function renderTable() {
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const currentData = allData.slice(startIndex, endIndex);
 
-    document.getElementById("fillAirdrop").innerHTML = ""; 
+    const tableBody = document.getElementById("fillAirdrop");
+    tableBody.innerHTML = ""; 
 
     currentData.forEach(fillRow);
 }
 
 function fillRow(value) {
-    let taskClass = getTaskClass(value.task);
-    let content = fillTable.replace("#NAME#", value.name)
-                           .replace("#TASK#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${taskClass}"><span class="p-2">${value.task}</span></div>`)
-                           .replace("#LINK#", value.link);
+    let taskClass = getTaskClass(value.task); 
+    let content = fillTablePaid.replace("#NAME#", value.name)
+                               .replace("#TASK#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${taskClass}"><span class="p-2">${value.task.toUpperCase()}</span></div>`)
+                               .replace("#LINK#", value.link);
     addInner("fillAirdrop", content);
+}
+
+function getTaskClass(task) {
+    switch (task) {
+        case 'daily':
+            return 'border-violet-700 bg-violet-700';
+        case 'testnet':
+            return 'border-green-500 bg-green-500';
+        case 'game':
+            return 'border-sky-400 bg-sky-400';
+        case 'social':
+            return 'border-fuchsia-600 bg-fuchsia-600';
+        case 'retro':
+            return 'border-red-500 bg-red-500';
+        case 'hold':
+            return 'border-gray-500 bg-gray-500';
+        case 'stake':
+            return 'border-indigo-950 bg-indigo-950';
+        case 'node':
+            return 'border-violet-700 bg-violet-700';
+        default:
+            return 'border-yellow-400 bg-yellow-400';
+    }
 }
 
 function renderPaginationControls() {

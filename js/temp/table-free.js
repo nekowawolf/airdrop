@@ -1,4 +1,4 @@
-export let fillTable = 
+export let fillTableFree = 
 `
 <tr class="nav border-underline transition-all duration-300">
     <td class="py-4 px-6 font-medium textp">#NAME#
