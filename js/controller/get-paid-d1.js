@@ -83,7 +83,7 @@ function getTaskClass(task) {
 
 function renderPaginationControls() {
     const paginationContainer = document.getElementById("pagination-controls");
-    paginationContainer.innerHTML = ""; 
+    paginationContainer.innerHTML = "";
 
     const nav = document.createElement("nav");
     nav.setAttribute("aria-label", "Page navigation example");
@@ -110,22 +110,25 @@ function renderPaginationControls() {
     liPrev.appendChild(prevButton);
     ul.appendChild(liPrev);
 
-    for (let i = 1; i <= totalPages; i++) {
-        const li = document.createElement("li");
-        const pageButton = document.createElement("a");
-        pageButton.innerText = i;
-        pageButton.href = "#";
-        pageButton.className = `flex items-center justify-center px-3 h-8 leading-tight ${
-            currentPage === i ? "z-10 text-blue-600 border paginb pagin-page pagin-hover-page hover:text-blue-700" : "text-gray-500 pagin paginb border pagin-hover"
-        }`;
-        pageButton.addEventListener("click", (event) => {
-            event.preventDefault();
-            currentPage = i;
-            renderTable();
-            renderPaginationControls();
-        });
-        li.appendChild(pageButton);
-        ul.appendChild(li);
+    addPageButton(1);
+
+    if (currentPage > 3) {
+        addEllipsis();
+    }
+
+    const startPage = Math.max(2, currentPage - 1);
+    const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+        addPageButton(i);
+    }
+
+    if (currentPage < totalPages - 2) {
+        addEllipsis();
+    }
+
+    if (totalPages > 1) {
+        addPageButton(totalPages);
     }
 
     const liNext = document.createElement("li");
@@ -148,4 +151,29 @@ function renderPaginationControls() {
 
     nav.appendChild(ul);
     paginationContainer.appendChild(nav);
+
+    function addPageButton(page) {
+        const li = document.createElement("li");
+        const pageButton = document.createElement("a");
+        pageButton.innerText = page;
+        pageButton.href = "#";
+        pageButton.className = `flex items-center justify-center px-3 h-8 leading-tight ${
+            currentPage === page ? "z-10 text-blue-600 border paginb pagin-page pagin-hover-page hover:text-blue-700" : "text-gray-500 pagin paginb border pagin-hover"
+        }`;
+        pageButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            currentPage = page;
+            renderTable();
+            renderPaginationControls();
+        });
+        li.appendChild(pageButton);
+        ul.appendChild(li);
+    }
+
+    function addEllipsis() {
+        const li = document.createElement("li");
+        li.className = "flex items-center justify-center px-3 h-8 leading-tight text-gray-500";
+        li.innerText = "...";
+        ul.appendChild(li);
+    }
 }

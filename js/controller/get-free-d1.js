@@ -1,5 +1,5 @@
 import { addInner } from "https://bukulapak.github.io/element/process.js";
-import { fillTableEnded } from "../temp/table-ended.js";
+import { fillTableFree } from "../temp/table-free.js";
 
 const ITEMS_PER_PAGE = 10; 
 let currentPage = 1; 
@@ -16,16 +16,15 @@ export function fillTableAirdrop(response) {
     noDataMessage.style.display = "none"; 
 
     if (response && Array.isArray(response.data)) {
-        const endedData = response.data.filter(item => item.status === 'ended');
-        console.log("Filtered ended data:", endedData); 
+        const activeData = response.data.filter(item => item.status === 'active');
 
-        if (endedData.length === 0) {
-            console.log("no ended search results");
+        if (activeData.length === 0) {
+            console.log("no active search results");
             noDataMessage.style.display = "block"; 
-            paginationContainer.style.display = "none";
+            paginationContainer.style.display = "none"; 
         } else {
             noDataMessage.style.display = "none"; 
-            allData = endedData;
+            allData = activeData;
             totalPages = Math.ceil(allData.length / ITEMS_PER_PAGE); 
             currentPage = 1; 
             renderTable(); 
@@ -40,12 +39,27 @@ export function fillTableAirdrop(response) {
     }
 }
 
-function getVestingClass(vesting) {
-    switch (vesting) {
-        case 'yes':
-            return 'border-red-500 bg-red-500';
-        case 'no':
+
+function getTaskClass(task) {
+    switch (task) {
+        case 'daily':
+            return 'border-violet-700 bg-violet-700';
+        case 'testnet':
+            return 'border-green-500 bg-green-500';
+        case 'game':
             return 'border-sky-400 bg-sky-400';
+        case 'social':
+            return 'border-fuchsia-600 bg-fuchsia-600';
+        case 'retro':
+            return 'border-red-500 bg-red-500';
+        case 'hold':
+            return 'border-gray-500 bg-gray-500';
+        case 'stake':
+            return 'border-indigo-950 bg-indigo-950';
+        case 'node':
+            return 'border-violet-700 bg-violet-700';
+        default:
+            return 'border-yellow-400 bg-yellow-400';
     }
 }
 
@@ -60,16 +74,16 @@ function renderTable() {
 }
 
 function fillRow(value) {
-    let vestingClass = getVestingClass(value.vesting);
-    let content = fillTableEnded.replace("#NAME#", value.name) 
-                               .replace("#VESTING#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${vestingClass}"><span class="p-2">${value.vesting.toUpperCase()}</span></div>`) 
-                               .replace("#LINK#", value.link_claim);
+    let taskClass = getTaskClass(value.task);
+    let content = fillTableFree.replace("#NAME#", value.name) 
+                               .replace("#TASK#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${taskClass}"><span class="p-2">${value.task.toUpperCase()}</span></div>`)
+                               .replace("#LINK#", value.link);
     addInner("fillAirdrop", content);
 }
 
 function renderPaginationControls() {
     const paginationContainer = document.getElementById("pagination-controls");
-    paginationContainer.innerHTML = ""; 
+    paginationContainer.innerHTML = "";
 
     const nav = document.createElement("nav");
     nav.setAttribute("aria-label", "Page navigation example");
@@ -96,22 +110,25 @@ function renderPaginationControls() {
     liPrev.appendChild(prevButton);
     ul.appendChild(liPrev);
 
-    for (let i = 1; i <= totalPages; i++) {
-        const li = document.createElement("li");
-        const pageButton = document.createElement("a");
-        pageButton.innerText = i;
-        pageButton.href = "#";
-        pageButton.className = `flex items-center justify-center px-3 h-8 leading-tight ${
-            currentPage === i ? "z-10 text-blue-600 border paginb pagin-page pagin-hover-page hover:text-blue-700" : "text-gray-500 pagin paginb border pagin-hover"
-        }`;
-        pageButton.addEventListener("click", (event) => {
-            event.preventDefault();
-            currentPage = i;
-            renderTable();
-            renderPaginationControls();
-        });
-        li.appendChild(pageButton);
-        ul.appendChild(li);
+    addPageButton(1);
+
+    if (currentPage > 3) {
+        addEllipsis();
+    }
+
+    const startPage = Math.max(2, currentPage - 1);
+    const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+        addPageButton(i);
+    }
+
+    if (currentPage < totalPages - 2) {
+        addEllipsis();
+    }
+
+    if (totalPages > 1) {
+        addPageButton(totalPages);
     }
 
     const liNext = document.createElement("li");
@@ -134,26 +151,29 @@ function renderPaginationControls() {
 
     nav.appendChild(ul);
     paginationContainer.appendChild(nav);
-}
 
-function filterData() {
-    const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="yes"], input[type="checkbox"][value="no"]'))
-        .filter(checkbox => checkbox.checked)
-        .map(checkbox => checkbox.value.trim());
-    
-    console.log("Selected tasks for filtering:", selectedTasks); 
+    function addPageButton(page) {
+        const li = document.createElement("li");
+        const pageButton = document.createElement("a");
+        pageButton.innerText = page;
+        pageButton.href = "#";
+        pageButton.className = `flex items-center justify-center px-3 h-8 leading-tight ${
+            currentPage === page ? "z-10 text-blue-600 border paginb pagin-page pagin-hover-page hover:text-blue-700" : "text-gray-500 pagin paginb border pagin-hover"
+        }`;
+        pageButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            currentPage = page;
+            renderTable();
+            renderPaginationControls();
+        });
+        li.appendChild(pageButton);
+        ul.appendChild(li);
+    }
 
-    const filteredData = allData.filter(item => {
-        if (selectedTasks.length === 0) return true; 
-        return selectedTasks.includes(item.vesting); 
-    });
-
-    console.log("Filtered data based on selected tasks:", filteredData); 
-
-    if (filteredData.length > 0) {
-        allData = filteredData; 
-        renderTable(); 
-    } else {
-        console.log("No results found after filtering");
+    function addEllipsis() {
+        const li = document.createElement("li");
+        li.className = "flex items-center justify-center px-3 h-8 leading-tight text-gray-500";
+        li.innerText = "...";
+        ul.appendChild(li);
     }
 }
