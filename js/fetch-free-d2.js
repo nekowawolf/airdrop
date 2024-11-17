@@ -1,10 +1,10 @@
 import { get } from "./wrappedFetch.js"; 
-import { fillTableAirdrop } from "./controller/get-paid-d1.js"; 
-import { urlAPIPaid } from "./config/url.js";
+import { fillTableAirdrop } from "./controller/get-free-d2.js"; 
+import { urlAPIFree } from "./config/url.js";
 
 let currentPage = 1; 
 
-get(urlAPIPaid, fillTableAirdrop);
+get(urlAPIFree, fillTableAirdrop);
 
 function showLoading() {
     document.getElementById('loading').style.display = 'flex';
@@ -24,30 +24,30 @@ function displayData(data) {
     checkboxes.forEach(checkbox => checkbox.checked = false); 
 }
 
-function searchPaidAirdrops(searchTerm) {
-    const apiUrlPaid = searchTerm === ''
-        ? urlAPIPaid
-        : `${urlAPIPaid}/search/${encodeURIComponent(searchTerm)}`;
+function searchFreeAirdrops(searchTerm) {
+    const apiUrlFree = searchTerm === ''
+        ? urlAPIFree
+        : `${urlAPIFree}/search/${encodeURIComponent(searchTerm)}`;
 
     showLoading();
-    currentPage = 1; 
+    currentPage = 1;
 
-    get(apiUrlPaid)
-        .then(paidData => {
-            displayData(paidData);
+    get(apiUrlFree)
+        .then(freeData => {
+            displayData(freeData);
         })
         .catch(error => {
-            console.error('Error fetching paid airdrop data:', error);
+            console.error('Error fetching free airdrop data:', error);
             document.getElementById('loading').style.display = 'none';
             document.getElementById('no-data-message').style.display = 'block';
         });
 }
 
-searchPaidAirdrops('');
+searchFreeAirdrops('');
 
 document.getElementById('search-input').addEventListener('input', function (e) {
     const searchTerm = e.target.value.trim();
-    searchPaidAirdrops(searchTerm);
+    searchFreeAirdrops(searchTerm);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -73,13 +73,13 @@ document.addEventListener("DOMContentLoaded", function () {
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value.trim());
             
-        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="retro"], input[type="checkbox"][value="hold"], input[type="checkbox"][value="stake"], input[type="checkbox"][value="node"]'))
+        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="daily"], input[type="checkbox"][value="testnet"], input[type="checkbox"][value="game"], input[type="checkbox"][value="gacha"], input[type="checkbox"][value="social"]'))
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value.trim());
 
         showLoading();
 
-        get(urlAPIPaid)
+        get(urlAPIFree)
         .then(response => {
             const filteredData = response.data.filter(item =>
                 (selectedLevels.length === 0 || selectedLevels.includes(item.level.trim())) &&
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     okButton.addEventListener("click", function () {
-        filterData();
+        filterData(); 
         dropdown.classList.add("hidden"); 
         chevronIcon.classList.remove("rotate-chevron");
     });
