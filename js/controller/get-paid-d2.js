@@ -1,5 +1,5 @@
 import { addInner } from "https://bukulapak.github.io/element/process.js";
-import { fillTableFree } from "../temp/table-free.js";
+import { fillTablePaid } from "../temp/table-paid.js";
 
 const ITEMS_PER_PAGE = 10; 
 let currentPage = 1; 
@@ -39,17 +39,27 @@ export function fillTableAirdrop(response) {
     }
 }
 
+function renderTable() {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const currentData = allData.slice(startIndex, endIndex);
+
+    const tableBody = document.getElementById("fillAirdrop");
+    tableBody.innerHTML = ""; 
+
+    currentData.forEach(fillRow);
+}
+
+function fillRow(value) {
+    let taskClass = getTaskClass(value.task); 
+    let content = fillTablePaid.replace("#NAME#", value.name)
+                               .replace("#TASK#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${taskClass}"><span class="p-2">${value.task.toUpperCase()}</span></div>`)
+                               .replace("#LINK#", value.link);
+    addInner("fillAirdrop", content);
+}
 
 function getTaskClass(task) {
     switch (task) {
-        case 'daily':
-            return 'border-violet-700 bg-violet-700';
-        case 'testnet':
-            return 'border-green-500 bg-green-500';
-        case 'game':
-            return 'border-sky-400 bg-sky-400';
-        case 'social':
-            return 'border-fuchsia-600 bg-fuchsia-600';
         case 'retro':
             return 'border-red-500 bg-red-500';
         case 'hold':
@@ -61,24 +71,6 @@ function getTaskClass(task) {
         default:
             return 'border-yellow-400 bg-yellow-400';
     }
-}
-
-function renderTable() {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    const currentData = allData.slice(startIndex, endIndex);
-
-    document.getElementById("fillAirdrop").innerHTML = ""; 
-
-    currentData.forEach(fillRow);
-}
-
-function fillRow(value) {
-    let taskClass = getTaskClass(value.task);
-    let content = fillTableFree.replace("#NAME#", value.name) 
-                               .replace("#TASK#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${taskClass}"><span class="p-2">${value.task.toUpperCase()}</span></div>`)
-                               .replace("#LINK#", value.link);
-    addInner("fillAirdrop", content);
 }
 
 function renderPaginationControls() {
