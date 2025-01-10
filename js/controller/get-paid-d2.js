@@ -42,10 +42,11 @@ export function fillTableAirdrop(response) {
 function renderTable() {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    const currentData = allData.slice(startIndex, endIndex);
+    
+    const sortedData = [...allData].reverse();
+    const currentData = sortedData.slice(startIndex, endIndex);
 
-    const tableBody = document.getElementById("fillAirdrop");
-    tableBody.innerHTML = ""; 
+    document.getElementById("fillAirdrop").innerHTML = ""; 
 
     currentData.forEach(fillRow);
 }

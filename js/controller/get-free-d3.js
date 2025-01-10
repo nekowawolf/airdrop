@@ -60,7 +60,9 @@ function getTaskClass(task) {
 function renderTable() {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    const currentData = allData.slice(startIndex, endIndex);
+    
+    const sortedData = [...allData].reverse();
+    const currentData = sortedData.slice(startIndex, endIndex);
 
     document.getElementById("fillAirdrop").innerHTML = ""; 
 
