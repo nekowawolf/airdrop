@@ -1,10 +1,10 @@
-import { get } from "./wrappedFetch.js";
-import { fillTableAirdrop } from "./controller/get-ended-d1.js";
-import { urlAPIEnded } from "./config/url.js";
+import { get } from "./wrappedFetch.js"; 
+import { fillTableAirdrop } from "./controller/get-free-d4.js"; 
+import { urlAPIFree } from "./config/url.js";
 
-let currentPage = 1;
+let currentPage = 1; 
 
-get(urlAPIEnded, fillTableAirdrop);
+get(urlAPIFree, fillTableAirdrop);
 
 function showLoading() {
     document.getElementById('loading').style.display = 'flex';
@@ -15,43 +15,39 @@ function showLoading() {
 
 function displayData(data) {
     const tableBody = document.getElementById('fillAirdrop');
-    if (!tableBody) {
-        console.error("Element with ID 'fillAirdrop' not found.");
-        return;
-    }
-    tableBody.innerHTML = "";
+    tableBody.innerHTML = ""; 
     document.getElementById('loading').style.display = 'none';
     document.getElementById('fillAirdrop').style.display = 'table-row-group';
     fillTableAirdrop(data);
     
     const checkboxes = document.querySelectorAll('#dropdown input[type="checkbox"]');
-    checkboxes.forEach(checkbox => checkbox.checked = false);
+    checkboxes.forEach(checkbox => checkbox.checked = false); 
 }
 
-function searchEndedAirdrops(searchTerm) {
-    const apiUrlEnded = searchTerm === ''
-        ? urlAPIEnded
-        : `${urlAPIEnded}/search/${encodeURIComponent(searchTerm)}`;
+function searchFreeAirdrops(searchTerm) {
+    const apiUrlFree = searchTerm === ''
+        ? urlAPIFree
+        : `${urlAPIFree}/search/${encodeURIComponent(searchTerm)}`;
 
     showLoading();
     currentPage = 1;
 
-    get(apiUrlEnded)
-        .then(endedData => {
-            displayData(endedData);
+    get(apiUrlFree)
+        .then(freeData => {
+            displayData(freeData);
         })
         .catch(error => {
-            console.error('Error fetching ended airdrop data:', error);
+            console.error('Error fetching free airdrop data:', error);
             document.getElementById('loading').style.display = 'none';
             document.getElementById('no-data-message').style.display = 'block';
         });
 }
 
-searchEndedAirdrops('');
+searchFreeAirdrops('');
 
 document.getElementById('search-input').addEventListener('input', function (e) {
     const searchTerm = e.target.value.trim();
-    searchEndedAirdrops(searchTerm);
+    searchFreeAirdrops(searchTerm);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -73,36 +69,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function filterData() {
-        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="yes"], input[type="checkbox"][value="no"]'))
+        const selectedLevels = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="easy"], input[type="checkbox"][value="medium"], input[type="checkbox"][value="hard"]'))
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value.trim());
+            
+        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="daily"], input[type="checkbox"][value="testnet"], input[type="checkbox"][value="game"], input[type="checkbox"][value="gacha"], input[type="checkbox"][value="social"]'))
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value.trim());
 
-        console.log("Selected tasks for filtering:", selectedTasks);
-
         showLoading();
 
-        get(urlAPIEnded)
-            .then(response => {
-                const filteredData = response.data.filter(item => {
-                    if (item.status !== 'ended') return false;
-
-                    if (selectedTasks.length === 0) return true;
-
-                    return selectedTasks.includes(item.vesting.trim());
-                });
-
-                console.log("Filtered data based on selected tasks:", filteredData);
-                displayData({ data: filteredData });
-            })
-            .catch(error => {
-                console.error("Error fetching filtered data:", error);
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('no-data-message').style.display = 'block';
-            });
+        get(urlAPIFree)
+        .then(response => {
+            const filteredData = response.data.filter(item =>
+                (selectedLevels.length === 0 || selectedLevels.includes(item.level.trim())) &&
+                (selectedTasks.length === 0 || selectedTasks.includes(item.task.trim())) &&
+                item.status === 'active'
+            );
+            displayData({ data: filteredData });
+        })
+        .catch(error => {
+            console.error("Error fetching filtered data:", error);
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('no-data-message').style.display = 'block';
+        });
     }
 
     okButton.addEventListener("click", function () {
-        filterData();
+        filterData(); 
         dropdown.classList.add("hidden"); 
         chevronIcon.classList.remove("rotate-chevron");
     });
