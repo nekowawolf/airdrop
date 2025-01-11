@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value.trim());
             
-        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="daily"], input[type="checkbox"][value="testnet"], input[type="checkbox"][value="game"], input[type="checkbox"][value="gacha"], input[type="checkbox"][value="social"]'))
+        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="daily"], input[type="checkbox"][value="testnet"], input[type="checkbox"][value="game"], input[type="checkbox"][value="gacha"], input[type="checkbox"][value="social"], input[type="checkbox"][value="depin"]'))
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value.trim());
 
