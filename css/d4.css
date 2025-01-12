@@ -6,19 +6,43 @@
 .navbar-width {
   width: 40%;       
   max-width: 56rem;  
+  margin: 0 auto;    
+  padding: 0.5rem;    
+  transition: width 0.3s ease; 
 }
 
 @media (max-width: 768px) {
   .navbar-width {
     width: 97%;       
-    max-width: 56rem;  
+    max-width: 56rem; 
   }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .navbar-width {
     width: 50%;       
-    max-width: 56rem;  
+    max-width: 56rem; 
+  }
+}
+
+@media (min-width: 1920px) and (max-width: 2560px) {
+  .navbar-width {
+    width: 30%;       
+    max-width: 70rem; 
+  }
+}
+
+@media (min-width: 2560px) and (max-width: 3440px) {
+  .navbar-width {
+    width: 20%;       
+    max-width: 70rem; 
+  }
+}
+
+@media (min-width: 3440px) {
+  .navbar-width {
+    width: 15%;      
+    max-width: 70rem; 
   }
 }
 
