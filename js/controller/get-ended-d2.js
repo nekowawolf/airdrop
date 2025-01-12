@@ -1,5 +1,5 @@
 import { addInner } from "https://bukulapak.github.io/element/process.js";
-import { fillTableEnded } from "../temp/table-ended.js";
+import { fillTableEnded } from "../temp/table-ended-d1.js";
 
 const ITEMS_PER_PAGE = 10; 
 let currentPage = 1; 

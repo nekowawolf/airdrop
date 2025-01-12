@@ -1,5 +1,5 @@
 import { addInner } from "https://bukulapak.github.io/element/process.js";
-import { fillTablePaid } from "../temp/table-paid.js";
+import { fillTablePaid } from "../temp/table-paid-d1.js";
 
 const ITEMS_PER_PAGE = 10; 
 let currentPage = 1; 
