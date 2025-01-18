@@ -10,7 +10,7 @@ export let fillTableEnded =
     </td>
     <td class="py-3 px-6 text-center w-1/3">
         <a href="#LINK#" target="_blank" class="inline-block py-1 px-5 rounded-md text-white bg-gradient-to-r from-blue-500 to-violet-600">
-            Visit
+            Claim
         </a>
     </td>
 </tr>
