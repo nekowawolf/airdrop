@@ -1,5 +1,5 @@
 import { get } from "./wrappedFetch.js";
-import { fillTableAirdrop } from "./controller/get-ended-d3.js";
+import { fillTableAirdrop } from "./controller/get-ended-d4.js";
 import { urlAPIEnded } from "./config/url.js";
 
 let currentPage = 1;
