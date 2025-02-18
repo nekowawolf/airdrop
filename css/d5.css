@@ -160,6 +160,10 @@ background-color: var(--search-bar);
   fill: var(--filter-color);    
 }
 
+.text-fund {
+  font-size: 10px;
+}
+
 
 #theme-switch svg{
     fill: var(--primary-color);
