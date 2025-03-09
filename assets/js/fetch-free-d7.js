@@ -1,6 +1,6 @@
 import { get } from "./wrappedFetch.js"; 
 import { fillTableAirdrop } from "./controller/get-free-d6.js"; 
-import { urlAPIFree } from "./config/url.js";
+import { urlAPIFree } from "./config/url-d1.js";
 
 let currentPage = 1; 
 
