@@ -1,5 +1,5 @@
 import { get } from "./wrappedFetch.js"; 
-import { fillTableAirdrop } from "./controller/get-free-d6.js"; 
+import { fillTableAirdrop } from "./controller/get-free-d7.js"; 
 import { urlAPIFree } from "./config/url-d1.js";
 
 let currentPage = 1; 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value.trim());
             
-        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="daily"], input[type="checkbox"][value="testnet"], input[type="checkbox"][value="game"], input[type="checkbox"][value="gacha"], input[type="checkbox"][value="social"], input[type="checkbox"][value="depin"]'))
+        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="daily"], input[type="checkbox"][value="testnet"], input[type="checkbox"][value="game"], input[type="checkbox"][value="social"], input[type="checkbox"][value="depin"]'))
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value.trim());
 

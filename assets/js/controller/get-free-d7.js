@@ -50,8 +50,6 @@ function getTaskClass(task) {
             return 'border-sky-400 bg-sky-400';
         case 'social':
             return 'border-fuchsia-600 bg-fuchsia-600';
-        case 'gacha':
-            return 'border-teal-600 bg-teal-600';
         case 'depin':
             return 'border-green-500 bg-green-500';
         default:
