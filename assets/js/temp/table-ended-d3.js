@@ -28,7 +28,7 @@ const cardEnded = `
         <div class="text-center">
             <h2 class="text-2xl font-bold textp mb-4">Coming Soon!</h2>
             <p class="textp mb-6">This feature is currently under development. Stay tuned for updates!</p>
-            <button onclick="hideCardEnded()" class="bg-violet-600 text-white px-6 py-2 rounded-md hover:bg-violet-700 transition-colors">
+            <button onclick="hideCardEnded()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md transition-colors">
                 Close
             </button>
         </div>
