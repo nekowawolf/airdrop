@@ -1,5 +1,5 @@
 import { addInner } from "https://bukulapak.github.io/element/process.js";
-import { fillTablePaid } from "../temp/table-paid-d2.js";
+import { fillTableFree } from "../temp/table-free-d3.js";
 
 const ITEMS_PER_PAGE = 10; 
 let currentPage = 1; 
@@ -39,6 +39,24 @@ export function fillTableAirdrop(response) {
     }
 }
 
+
+function getTaskClass(task) {
+    switch (task) {
+        case 'daily':
+            return 'border-violet-700 bg-violet-700';
+        case 'testnet':
+            return 'border-red-600 bg-red-600';
+        case 'game':
+            return 'border-sky-400 bg-sky-400';
+        case 'social':
+            return 'border-fuchsia-600 bg-fuchsia-600';
+        case 'depin':
+            return 'border-green-500 bg-green-500';
+        default:
+            return 'border-yellow-400 bg-yellow-400';
+    }
+}
+
 function renderTable() {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -52,26 +70,11 @@ function renderTable() {
 }
 
 function fillRow(value) {
-    let taskClass = getTaskClass(value.task); 
-    let content = fillTablePaid.replace("#NAME#", value.name)
+    let taskClass = getTaskClass(value.task);
+    let content = fillTableFree.replace("#NAME#", value.name) 
                                .replace("#TASK#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${taskClass}"><span class="p-2">${value.task.toUpperCase()}</span></div>`)
                                .replace("#LINK#", value.link);
     addInner("fillAirdrop", content);
-}
-
-function getTaskClass(task) {
-    switch (task) {
-        case 'retro':
-            return 'border-red-500 bg-red-500';
-        case 'hold':
-            return 'border-gray-500 bg-gray-500';
-        case 'stake':
-            return 'border-indigo-950 bg-indigo-950';
-        case 'node':
-            return 'border-violet-700 bg-violet-700';
-        default:
-            return 'border-yellow-400 bg-yellow-400';
-    }
 }
 
 function renderPaginationControls() {
