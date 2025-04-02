@@ -1,10 +1,10 @@
 import { get } from "./wrappedFetch.js"; 
-import { fillTableAirdrop } from "./controller/get-free-d7.js"; 
-import { urlAPIFree } from "./config/url-d1.js";
+import { fillTableAirdrop } from "./controller/get-paid-d5.js"; 
+import { urlAPIPaid } from "./config/url-d1.js";
 
 let currentPage = 1; 
 
-get(urlAPIFree, fillTableAirdrop);
+get(urlAPIPaid, fillTableAirdrop);
 
 function showLoading() {
     document.getElementById('loading').style.display = 'flex';
@@ -24,30 +24,30 @@ function displayData(data) {
     checkboxes.forEach(checkbox => checkbox.checked = false); 
 }
 
-function searchFreeAirdrops(searchTerm) {
-    const apiUrlFree = searchTerm === ''
-        ? urlAPIFree
-        : `${urlAPIFree}/search/${encodeURIComponent(searchTerm)}`;
+function searchPaidAirdrops(searchTerm) {
+    const apiUrlPaid = searchTerm === ''
+        ? urlAPIPaid
+        : `${urlAPIPaid}/search/${encodeURIComponent(searchTerm)}`;
 
     showLoading();
-    currentPage = 1;
+    currentPage = 1; 
 
-    get(apiUrlFree)
-        .then(freeData => {
-            displayData(freeData);
+    get(apiUrlPaid)
+        .then(paidData => {
+            displayData(paidData);
         })
         .catch(error => {
-            console.error('Error fetching free airdrop data:', error);
+            console.error('Error fetching paid airdrop data:', error);
             document.getElementById('loading').style.display = 'none';
             document.getElementById('no-data-message').style.display = 'block';
         });
 }
 
-searchFreeAirdrops('');
+searchPaidAirdrops('');
 
 document.getElementById('search-input').addEventListener('input', function (e) {
     const searchTerm = e.target.value.trim();
-    searchFreeAirdrops(searchTerm);
+    searchPaidAirdrops(searchTerm);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -73,19 +73,23 @@ document.addEventListener("DOMContentLoaded", function () {
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value.trim());
             
-        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="daily"], input[type="checkbox"][value="testnet"], input[type="checkbox"][value="game"], input[type="checkbox"][value="social"], input[type="checkbox"][value="depin"]'))
+        const selectedTasks = Array.from(dropdown.querySelectorAll('input[type="checkbox"][value="retro"], input[type="checkbox"][value="hold"], input[type="checkbox"][value="stake"], input[type="checkbox"][value="node"]'))
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value.trim());
 
         showLoading();
 
-        get(urlAPIFree)
+        get(urlAPIPaid)
         .then(response => {
-            const filteredData = response.data.filter(item =>
-                (selectedLevels.length === 0 || selectedLevels.includes(item.level.trim())) &&
-                (selectedTasks.length === 0 || selectedTasks.includes(item.task.trim())) &&
-                item.status === 'active'
-            );
+            const filteredData = response.data.filter(item => {
+                const level = item.level ? item.level.trim() : '';
+                const task = item.task ? item.task.trim() : '';
+                return (
+                    (selectedLevels.length === 0 || selectedLevels.includes(level)) &&
+                    (selectedTasks.length === 0 || selectedTasks.includes(task)) &&
+                    item.status === 'active'
+                );
+            });
             displayData({ data: filteredData });
         })
         .catch(error => {
@@ -96,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     okButton.addEventListener("click", function () {
-        filterData(); 
+        filterData();
         dropdown.classList.add("hidden"); 
         chevronIcon.classList.remove("rotate-chevron");
     });

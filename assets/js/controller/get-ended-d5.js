@@ -1,5 +1,5 @@
 import { addInner } from "https://bukulapak.github.io/element/process.js";
-import { fillTableFree } from "../temp/table-free-d1.js";
+import { fillTableEnded } from "../temp/table-ended-d3.js";
 
 const ITEMS_PER_PAGE = 10; 
 let currentPage = 1; 
@@ -16,15 +16,16 @@ export function fillTableAirdrop(response) {
     noDataMessage.style.display = "none"; 
 
     if (response && Array.isArray(response.data)) {
-        const activeData = response.data.filter(item => item.status === 'active');
+        const endedData = response.data.filter(item => item.status === 'ended');
+        console.log("Filtered ended data:", endedData); 
 
-        if (activeData.length === 0) {
-            console.log("no active search results");
+        if (endedData.length === 0) {
+            console.log("no ended search results");
             noDataMessage.style.display = "block"; 
-            paginationContainer.style.display = "none"; 
+            paginationContainer.style.display = "none";
         } else {
             noDataMessage.style.display = "none"; 
-            allData = activeData;
+            allData = endedData;
             totalPages = Math.ceil(allData.length / ITEMS_PER_PAGE); 
             currentPage = 1; 
             renderTable(); 
@@ -39,21 +40,12 @@ export function fillTableAirdrop(response) {
     }
 }
 
-
-function getTaskClass(task) {
-    switch (task) {
-        case 'daily':
-            return 'border-violet-700 bg-violet-700';
-        case 'testnet':
-            return 'border-red-600 bg-red-600';
-        case 'game':
+function getVestingClass(vesting) {
+    switch (vesting) {
+        case 'yes':
+            return 'border-red-500 bg-red-500';
+        case 'no':
             return 'border-sky-400 bg-sky-400';
-        case 'social':
-            return 'border-fuchsia-600 bg-fuchsia-600';
-        case 'depin':
-            return 'border-green-500 bg-green-500';
-        default:
-            return 'border-yellow-400 bg-yellow-400';
     }
 }
 
@@ -70,10 +62,10 @@ function renderTable() {
 }
 
 function fillRow(value) {
-    let taskClass = getTaskClass(value.task);
-    let content = fillTableFree.replace("#NAME#", value.name) 
-                               .replace("#TASK#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${taskClass}"><span class="p-2">${value.task.toUpperCase()}</span></div>`)
-                               .replace("#LINK#", value.link);
+    let vestingClass = getVestingClass(value.vesting);
+    let content = fillTableEnded.replace("#NAME#", value.name) 
+                               .replace("#VESTING#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${vestingClass}"><span class="p-2">${value.vesting.toUpperCase()}</span></div>`) 
+                               .replace("#LINK#", value.link_claim);
     addInner("fillAirdrop", content);
 }
 
