@@ -1,5 +1,5 @@
 import { addInner } from "https://bukulapak.github.io/element/process.js";
-import { fillTableEnded } from "../temp/table-ended-d4.js";
+import { fillTablePaid } from "../temp/table-paid-d4.js";
 
 const ITEMS_PER_PAGE = 10; 
 let currentPage = 1; 
@@ -16,16 +16,15 @@ export function fillTableAirdrop(response) {
     noDataMessage.style.display = "none"; 
 
     if (response && Array.isArray(response.data)) {
-        const endedData = response.data.filter(item => item.status === 'ended');
-        console.log("Filtered ended data:", endedData); 
+        const activeData = response.data.filter(item => item.status === 'active');
 
-        if (endedData.length === 0) {
-            console.log("no ended search results");
+        if (activeData.length === 0) {
+            console.log("no active search results");
             noDataMessage.style.display = "block"; 
-            paginationContainer.style.display = "none";
+            paginationContainer.style.display = "none"; 
         } else {
             noDataMessage.style.display = "none"; 
-            allData = endedData;
+            allData = activeData;
             totalPages = Math.ceil(allData.length / ITEMS_PER_PAGE); 
             currentPage = 1; 
             renderTable(); 
@@ -37,15 +36,6 @@ export function fillTableAirdrop(response) {
         console.error("error: invalid data format", response); 
         noDataMessage.style.display = "block"; 
         paginationContainer.style.display = "none"; 
-    }
-}
-
-function getVestingClass(vesting) {
-    switch (vesting) {
-        case 'yes':
-            return 'border-red-500 bg-red-500';
-        case 'no':
-            return 'border-sky-400 bg-sky-400';
     }
 }
 
@@ -62,11 +52,26 @@ function renderTable() {
 }
 
 function fillRow(value) {
-    let vestingClass = getVestingClass(value.vesting);
-    let content = fillTableEnded.replace("#NAME#", value.name) 
-                               .replace("#VESTING#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${vestingClass}"><span class="p-2">${value.vesting.toUpperCase()}</span></div>`) 
-                               .replace("#LINK#", value.link_claim);
+    let taskClass = getTaskClass(value.task); 
+    let content = fillTablePaid.replace("#NAME#", value.name)
+                               .replace("#TASK#", `<div class="flex items-center justify-center border rounded-md h-7 w-16 text-white ${taskClass}"><span class="p-2">${value.task.toUpperCase()}</span></div>`)
+                               .replace("#LINK#", value.link);
     addInner("fillAirdrop", content);
+}
+
+function getTaskClass(task) {
+    switch (task) {
+        case 'retro':
+            return 'border-red-500 bg-red-500';
+        case 'hold':
+            return 'border-gray-500 bg-gray-500';
+        case 'stake':
+            return 'border-indigo-950 bg-indigo-950';
+        case 'node':
+            return 'border-violet-700 bg-violet-700';
+        default:
+            return 'border-yellow-400 bg-yellow-400';
+    }
 }
 
 function renderPaginationControls() {
